@@ -1,4 +1,5 @@
 
+from typing import Dict
 from src import Caesar
 
 if __name__ == '__main__':
@@ -23,7 +24,8 @@ if __name__ == '__main__':
         if use.lower() == "stop":
             break
         elif use.lower() == "decrypt":
-            for key, text in crypt.decrypt(message):
-                print("Ключ {} приводит к сообщению '{}'".format(key, text))
+            variants: Dict[int, str] = crypt.decrypt(message)
+            for key in variants.keys():
+                print("Ключ {} приводит к сообщению '{}'".format(key, variants[key]))
         else:
             print(crypt.encrypt(message))

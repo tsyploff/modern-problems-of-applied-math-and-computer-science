@@ -39,7 +39,7 @@ class Caesar:
 
         result = {}
         for key in range(len(self.alphabet)):
-            self.set_key(key)
+            self.set_key(-key)
             result[key] = self.encrypt(message)
 
         self.key = true_key
