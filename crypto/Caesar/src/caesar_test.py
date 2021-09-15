@@ -1,8 +1,8 @@
 import unittest
 
 
-class VigenereTest(unittest.TestCase):
-    def test_vigenere(self):
+class CaesarTest(unittest.TestCase):
+    def test_caesar(self):
         #  пока что не успел написать тесты
         self.assertEqual(True, True)
 
