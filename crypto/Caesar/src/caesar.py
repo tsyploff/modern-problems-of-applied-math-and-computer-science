@@ -11,7 +11,7 @@ class Caesar:
 
     def set_hash_table(self) -> None:
         n = len(self.alphabet)
-        self.hash_table = {self.alphabet[i]: self.alphabet[i + self.key % n] for i in range(n)}
+        self.hash_table = {self.alphabet[i]: self.alphabet[(i + self.key) % n] for i in range(n)}
         self.hash_table[" "] = " "
 
     def set_alphabet(self, alphabet: str) -> None:

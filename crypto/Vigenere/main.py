@@ -23,7 +23,6 @@ if __name__ == '__main__':
         if use.lower() == "stop":
             break
         elif use.lower() == "decrypt":
-            for key, text in crypt.decrypt(message):
-                print("Ключ {} приводит к сообщению '{}'".format(key, text))
+            print(crypt.decrypt(message))
         else:
             print("Зашифрованное сообщение:", crypt.encrypt(message))
