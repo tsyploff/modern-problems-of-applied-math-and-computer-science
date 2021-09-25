@@ -49,7 +49,7 @@ def lucas_lehmer_primality_test(p: int) -> bool:
     :param p: p - простое
     :return: является ли M_p простым
     """
-    mersenne: int = 2**p - 1
+    mersenne: int = 2 ** p - 1
     s: int = 4
     for i in range(1, p - 1):
         s = (s ** 2 - 2) % mersenne
@@ -62,7 +62,7 @@ def mersenne_generator(n: int) -> List[int]:
     M_p = 2^p - 1, p < n
     """
     primes: List[int] = list(filter(lucas_lehmer_primality_test, eratosthenes_sieve(n)))
-    return [2**p - 1 for p in primes]
+    return [2 ** p - 1 for p in primes]
 
 
 def prime_generator(n: int = 256, k: int = 10) -> int:
@@ -77,4 +77,4 @@ def prime_generator(n: int = 256, k: int = 10) -> int:
         return abs(n - m)
 
     mersenne_primes: List[int] = sorted(mersenne_generator(2 * n), key=distant_n)
-    return choice(mersenne_primes[:min(len(mersenne_primes), k)])
+    return choice(mersenne_primes[: min(len(mersenne_primes), k)])

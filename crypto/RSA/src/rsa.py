@@ -6,7 +6,6 @@ from .prime_generator import prime_generator, power_mod
 
 
 class RSA:
-
     def __init__(self, p: int, q: int):
         self.p = p
         self.q = q

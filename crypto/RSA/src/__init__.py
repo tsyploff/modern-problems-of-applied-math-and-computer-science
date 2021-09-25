@@ -4,7 +4,7 @@ from .prime_generator import (
     power_mod,
     lucas_lehmer_primality_test,
     mersenne_generator,
-    prime_generator
+    prime_generator,
 )
 
 __all__ = [
@@ -13,5 +13,5 @@ __all__ = [
     "power_mod",
     "lucas_lehmer_primality_test",
     "mersenne_generator",
-    "prime_generator"
+    "prime_generator",
 ]
