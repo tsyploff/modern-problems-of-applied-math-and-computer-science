@@ -20,7 +20,7 @@ class RSA:
             gcd, (private_key, _) = extended_gcd(open_exponent, self.phi)
         return open_exponent, private_key
 
-    def encrypt(self, message: int, open_exponent: int):
+    def encrypt(self, message: int, open_exponent: int) -> int:
         return power_mod(message, open_exponent, self.n)
 
     @staticmethod

@@ -77,7 +77,7 @@ def prime_generator(n: int = 256, k: int = 10) -> int:
     """
 
     def distant_n(m: int) -> int:
-        return abs(n - m)
+        return abs(2 ** n - m)
 
     mersenne_primes: List[int] = sorted(mersenne_generator(2 * n), key=distant_n)
     return choice(mersenne_primes[: min(len(mersenne_primes), k)])
