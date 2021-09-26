@@ -4,10 +4,11 @@ from .prime_generator import (
     power_mod,
     lucas_lehmer_primality_test,
     mersenne_generator,
-    prime_generator,
 )
+from .rsa import RSA
 
 __all__ = [
+    "RSA",
     "extended_gcd",
     "eratosthenes_sieve",
     "power_mod",
