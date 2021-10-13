@@ -18,7 +18,7 @@ class RSA:
         while gcd != 1:
             open_exponent: int = randint(3, self.phi)
             gcd, (private_key, _) = extended_gcd(open_exponent, self.phi)
-        return open_exponent, private_key
+        return open_exponent, private_key % self.phi
 
     def encrypt(self, message: int, open_exponent: int) -> int:
         return power_mod(message, open_exponent, self.n)

@@ -22,6 +22,9 @@ class Miner(Client):
                 print("Incorrect transaction has been found!")
         return block
 
+    def __str__(self):
+        return "Miner" + str(self.name)
+
     @staticmethod
     def check_signature(message: int, signature: Tuple[int, Tuple[int, int]]) -> bool:
         s, (e, n) = signature
@@ -31,6 +34,6 @@ class Miner(Client):
     def mine(block: Block, difficulty=1) -> str:
         prefix = "0" * difficulty
         for attempt in range(1000):
-            digest = md5(str(hash(block)) + str(attempt)).hexdigest()
+            digest = md5((str(hash(block)) + str(attempt)).encode()).hexdigest()
             if digest.startswith(prefix):
                 return digest
