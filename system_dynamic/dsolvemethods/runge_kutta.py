@@ -11,9 +11,9 @@ class RungeKutta:
 
     def solve(
         self, cauchy_problem: CauchyProblem, period: float
-    ) -> Tuple[List[float], List[float]]:
+    ) -> Tuple[List[float], List[List[float]]]:
         args = [cauchy_problem.arg]
-        values = [cauchy_problem.value]
+        values = [cauchy_problem.values]
         for _ in range(round(period / self.h)):
             k_1 = cauchy_problem.derivative(args[-1], values[-1])
             k_2 = cauchy_problem.derivative(

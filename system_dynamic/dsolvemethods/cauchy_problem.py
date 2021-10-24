@@ -1,3 +1,7 @@
+from typing import List
+from .vector_function import VectorFunction
+
+
 class CauchyProblem:
     """Gives the Cauchy problem defined by
 
@@ -6,15 +10,16 @@ class CauchyProblem:
 
     """
 
-    def __init__(self, function, arg: float, value: float):
+    def __init__(self, function: VectorFunction, arg: float, values: List[float]):
         self.function = function
         self.arg = arg
-        self.value = value
+        self.values = values
 
     def __str__(self):
-        return (
-            f"y'(x) = f(x, y), where f is {self.function}\ny({self.arg}) = {self.value}"
-        )
+        string = f"y'(x) = f(x, y), where f is {self.function}\n"
+        for i in range(len(self.values)):
+            string += f"y_{i}({self.arg}) = {self.values[i]}"
+        return string
 
-    def derivative(self, arg: float, value: float):
-        return self.function(arg, value)
+    def derivative(self, arg: float, values: List[float]):
+        return self.function(arg, values)
