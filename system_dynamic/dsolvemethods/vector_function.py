@@ -1,4 +1,4 @@
-from typing import List
+import numpy as np
 
 
 class VectorFunction:
@@ -13,5 +13,5 @@ class VectorFunction:
         self.functions = functions
         self.dim = len(functions)
 
-    def __call__(self, *args) -> List[float]:
-        return [f(*args) for f in self.functions]
+    def __call__(self, *args) -> np.ndarray:
+        return np.array(f(*args) for f in self.functions)

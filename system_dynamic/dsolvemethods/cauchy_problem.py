@@ -1,4 +1,4 @@
-from typing import List
+import numpy as np
 from .vector_function import VectorFunction
 
 
@@ -10,7 +10,7 @@ class CauchyProblem:
 
     """
 
-    def __init__(self, function: VectorFunction, arg: float, values: List[float]):
+    def __init__(self, function: VectorFunction, arg: float, values: np.ndarray):
         self.function = function
         self.arg = arg
         self.values = values
@@ -21,5 +21,5 @@ class CauchyProblem:
             string += f"y_{i}({self.arg}) = {self.values[i]}"
         return string
 
-    def derivative(self, arg: float, values: List[float]):
+    def derivative(self, arg: float, values: np.ndarray):
         return self.function(arg, values)
