@@ -21,5 +21,5 @@ class CauchyProblem:
             string += f"y_{i}({self.arg}) = {self.values[i]}"
         return string
 
-    def derivative(self, arg: float, values: np.ndarray):
+    def derivative(self, arg: float, values: np.ndarray) -> np.ndarray:
         return self.function(arg, values)
