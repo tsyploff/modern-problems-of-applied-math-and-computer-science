@@ -14,4 +14,4 @@ class VectorFunction:
         self.dim = len(functions)
 
     def __call__(self, *args) -> np.ndarray:
-        return np.array(f(*args) for f in self.functions)
+        return np.array([f(*args) for f in self.functions])
