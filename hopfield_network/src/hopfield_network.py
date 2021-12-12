@@ -18,8 +18,8 @@ class HopfieldNetwork:
         :param sample: список эталонных образцов, матрица из 1 и -1
         :return: экземпляр обученной модели
         """
-        self.dimension = sample.shape[1]
-        self.weights = sum(np.outer(instance, instance)/self.dimension for instance in sample) - np.eye(self.dimension)
+        n, self.dimension = sample.shape
+        self.weights = sum(np.outer(instance, instance) / n for instance in sample) - np.eye(self.dimension)
         return self
 
     def predict(self, sample: np.array) -> np.array:
