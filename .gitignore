@@ -131,5 +131,7 @@ dmypy.json
 # PyCharm files
 .idea/
 
-# Texts
+# Data files
 *.txt
+*.parquet
+nlp/sentiment_analysis/aclImdb/
