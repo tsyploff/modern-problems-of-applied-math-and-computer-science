@@ -31,7 +31,7 @@ class HopfieldNetwork:
         result = [self.__predict(instance) for instance in sample]
         return np.array(result, dtype=np.int32)
 
-    def __predict(self, instance: np.array) -> np.array:
+    def __predict(self, instance: np.array) -> Optional[np.array]:
         if self.weights is None:
             return None
 
