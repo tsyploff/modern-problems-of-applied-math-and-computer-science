@@ -19,7 +19,7 @@ class HopfieldNetwork:
         :return: экземпляр обученной модели
         """
         n, self.dimension = sample.shape
-        self.weights = sum(np.outer(instance, instance) / n for instance in sample) - np.eye(self.dimension)
+        self.weights = sum(np.outer(instance, instance) for instance in sample) - n*np.eye(self.dimension)
         return self
 
     def predict(self, sample: np.array) -> np.array:
