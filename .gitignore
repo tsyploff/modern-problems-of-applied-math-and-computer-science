@@ -132,6 +132,7 @@ dmypy.json
 .idea/
 
 # Data files
+*.jpg
 *.txt
 *.parquet
 nlp/sentiment_analysis/aclImdb/
