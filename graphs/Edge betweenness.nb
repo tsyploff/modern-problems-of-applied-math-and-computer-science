@@ -1,0 +1,193 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7825,        185]
+NotebookOptionsPosition[      6699,        162]
+NotebookOutlinePosition[      7127,        179]
+CellTagsIndexPosition[      7084,        176]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "42", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"graph", "=", 
+  RowBox[{"RandomGraph", "[", 
+   RowBox[{
+    RowBox[{"BernoulliGraphDistribution", "[", 
+     RowBox[{"10", ",", ".25"}], "]"}], ",", 
+    RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846156789503753*^9, 3.846156831361785*^9}, {
+  3.8461580331069183`*^9, 3.8461580340348196`*^9}},
+ CellLabel->"In[79]:=",ExpressionUUID->"fd7edddc-0ee2-4ff0-8c16-a07e060eb10e"],
+
+Cell["\:0428\:0430\:0433 1.  \:0414\:043b\:044f \:0432\:0441\:0435\:0445 \
+\:0440\:0451\:0431\:0435\:0440 \:0432\:044b\:0447\:0438\:0441\:043b\:0438\
+\:0442\:044c edge betweenness", "Text",
+ CellChangeTimes->{{3.846157427521414*^9, 
+  3.846157475244336*^9}},ExpressionUUID->"02b79957-0ebd-4053-977e-\
+e32e067b8a5e"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "findAllShortestPathes", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"findAllShortestPathes", "[", "graph_Graph", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"findAllShortestPathes", "[", 
+     RowBox[{"graph", ",", "#"}], "]"}], "&"}], "/@", 
+   RowBox[{"Subsets", "[", 
+    RowBox[{
+     RowBox[{"VertexList", "@", "graph"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"findAllShortestPathes", "[", 
+   RowBox[{"graph_Graph", ",", 
+    RowBox[{"{", 
+     RowBox[{"s_", ",", "t_"}], "}"}]}], "]"}], ":=", 
+  RowBox[{"FindPath", "[", 
+   RowBox[{
+    RowBox[{"EdgeList", "@", "graph"}], ",", "s", ",", "t", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Length", "@", 
+       RowBox[{"FindShortestPath", "[", 
+        RowBox[{"graph", ",", "s", ",", "t"}], "]"}]}], "-", "1"}], "}"}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8461570616077847`*^9, 3.846157140890365*^9}, {
+  3.8461573005904837`*^9, 3.84615731222069*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"af53bcd9-cf7f-48c3-a989-b81fc16dc99e"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "vertexPathToEdgesPath", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vertexPathToEdgesPath", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:041d\:0430 \:0432\:0445\:043e\:0434 \:043f\:043e\:0441\:043b\:0435\
+\:0434\:043e\:0432\:0430\:0442\:0435\:043b\:044c\:043d\:043e\:0441\:0442\:044c\
+ \:0432\:0435\:0440\:0448\:0438\:043d, \:043d\:0430 \:0432\:044b\:0445\:043e\
+\:0434 \:043f\:043e\:0441\:043b\:0435\:0434\:043e\:0432\:0430\:0442\:0435\
+\:043b\:044c\:043d\:043e\:0441\:0442\:044c \:0434\:0443\:0433\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vertexPathToEdgesPath", "[", "path_", "]"}], ":=", 
+  RowBox[{"UndirectedEdge", "@@@", 
+   RowBox[{"Sort", "/@", 
+    RowBox[{"Partition", "[", 
+     RowBox[{"path", ",", "2", ",", "1"}], "]"}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.8461571664964213`*^9, 3.846157232837434*^9}, {
+  3.8461578455127363`*^9, 3.8461578462431526`*^9}},
+ CellLabel->"In[53]:=",ExpressionUUID->"fd579217-9623-4114-96e6-75f808e71516"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "edgeBetweenness", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"edgeBetweenness", "[", "graph_Graph", "]"}], ":=", 
+  RowBox[{"SortBy", "[", 
+   RowBox[{
+    RowBox[{"Tally", "@", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{"vertexPathToEdgesPath", ",", 
+         RowBox[{"findAllShortestPathes", "@", "graph"}], ",", 
+         RowBox[{"{", "2", "}"}]}], "]"}], ",", "2"}], "]"}]}], ",", 
+    "First"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8461568618472137`*^9, 3.8461569482313027`*^9}, {
+  3.8461570220736523`*^9, 3.8461570484169397`*^9}, {3.846157155805846*^9, 
+  3.8461571591531096`*^9}, {3.8461572365616646`*^9, 3.84615728669493*^9}, {
+  3.846157328982752*^9, 3.8461574062393074`*^9}, {3.8461578151865115`*^9, 
+  3.8461578188706436`*^9}, {3.8461578500908484`*^9, 3.846157851225649*^9}},
+ CellLabel->"In[56]:=",ExpressionUUID->"4a82112c-c157-409a-b43f-2f539f178356"],
+
+Cell[BoxData[
+ RowBox[{"edgeBetweenness", "@", "graph"}]], "Input",
+ CellChangeTimes->{{3.8461574124660034`*^9, 3.846157413704234*^9}, {
+  3.8461577928439074`*^9, 3.8461578231791916`*^9}},
+ CellLabel->"In[98]:=",ExpressionUUID->"55e42b47-9260-4149-af23-2f6b6481017d"],
+
+Cell[BoxData[{
+ RowBox[{"MaximalBy", "[", 
+  RowBox[{
+   RowBox[{"edgeBetweenness", "@", "graph"}], ",", "Last"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"%", "\[LeftDoubleBracket]", 
+  RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], "Input",
+ CellChangeTimes->{{3.846157566606922*^9, 3.8461576157328787`*^9}},
+ CellLabel->"In[99]:=",ExpressionUUID->"7d9103ec-5f1e-4cf9-986f-ccd0d7ab385f"],
+
+Cell["\<\
+\:0428\:0430\:0433 2.  \:0423\:0434\:0430\:043b\:0438\:0442\:044c \
+\:0440\:0435\:0431\:0440\:043e \:0441 \:043c\:0430\:043a\:0441\:0438\:043c\
+\:0430\:043b\:044c\:043d\:044b\:043c \:0437\:043d\:0430\:0447\:0435\:043d\
+\:0438\:0435\:043c \:043c\:0435\:0442\:0440\:0438\:043a\:0438
+\:0428\:0430\:0433 3. \:0415\:0441\:043b\:0438 \:0433\:0440\:0430\:0444 \
+\:0441\:0432\:044f\:0437\:0435\:043d, \:043f\:0435\:0440\:0435\:0439\:0442\
+\:0438 \:043a \:0448\:0430\:0433\:0443 \:043e\:0434\:0438\:043d, \:0438\:043d\
+\:0430\:0447\:0435 \:0437\:0430\:0432\:0435\:0440\:0448\:0438\:0442\:044c \
+\:043f\:0440\:043e\:0446\:0435\:0441\:0441 \
+\>", "Text",
+ CellChangeTimes->{{3.846157427521414*^9, 
+  3.8461575357017603`*^9}},ExpressionUUID->"ea203494-c2b3-4d4a-9ed8-\
+957cdac76ab8"],
+
+Cell[BoxData[
+ RowBox[{"result", "=", 
+  RowBox[{"NestWhile", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"EdgeDelete", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{
+        RowBox[{"MaximalBy", "[", 
+         RowBox[{
+          RowBox[{"edgeBetweenness", "@", "#"}], ",", "Last"}], "]"}], 
+        "\[LeftDoubleBracket]", 
+        RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], "]"}], "&"}], 
+    ",", "graph", ",", "ConnectedGraphQ"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.84615754726031*^9, 3.846157561844043*^9}, {
+  3.846157619791607*^9, 3.846157674717471*^9}, {3.846157997338423*^9, 
+  3.8461580101242714`*^9}},
+ CellLabel->"In[84]:=",ExpressionUUID->"3988a326-d474-457b-b21d-1651eb0371af"]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (July 9, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6b7d55b3-7b10-401a-b5e7-3494d078f09f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 535, 11, 73, "Input",ExpressionUUID->"fd7edddc-0ee2-4ff0-8c16-a07e060eb10e"],
+Cell[1096, 33, 315, 5, 53, "Text",ExpressionUUID->"02b79957-0ebd-4053-977e-e32e067b8a5e"],
+Cell[1414, 40, 1113, 28, 103, "Input",ExpressionUUID->"af53bcd9-cf7f-48c3-a989-b81fc16dc99e"],
+Cell[2530, 70, 1029, 19, 103, "Input",ExpressionUUID->"fd579217-9623-4114-96e6-75f808e71516"],
+Cell[3562, 91, 966, 19, 74, "Input",ExpressionUUID->"4a82112c-c157-409a-b43f-2f539f178356"],
+Cell[4531, 112, 267, 4, 43, "Input",ExpressionUUID->"55e42b47-9260-4149-af23-2f6b6481017d"],
+Cell[4801, 118, 399, 8, 73, "Input",ExpressionUUID->"7d9103ec-5f1e-4cf9-986f-ccd0d7ab385f"],
+Cell[5203, 128, 781, 13, 88, "Text",ExpressionUUID->"ea203494-c2b3-4d4a-9ed8-957cdac76ab8"],
+Cell[5987, 143, 708, 17, 43, "Input",ExpressionUUID->"3988a326-d474-457b-b21d-1651eb0371af"]
+}
+]
+*)
+
