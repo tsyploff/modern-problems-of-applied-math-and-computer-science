@@ -1,0 +1,577 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     23783,        569]
+NotebookOptionsPosition[     20682,        517]
+NotebookOutlinePosition[     21110,        534]
+CellTagsIndexPosition[     21067,        531]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\:041a\:043b\:0438\:043a\:0438", "Section",
+ CellChangeTimes->{{3.846424765642668*^9, 
+  3.8464247670771513`*^9}},ExpressionUUID->"74b43448-6953-4857-b2f1-\
+73312bb4c41a"],
+
+Cell["\:041a\:043b\:0438\:043a\:0430 \[Dash] \:043f\:043e\:043b\:043d\:044b\
+\:0439 \:043f\:043e\:0434\:0433\:0440\:0430\:0444 \:0432 \:0433\:0440\:0430\
+\:0444\:0435", "Text",
+ CellChangeTimes->{{3.8464247693665743`*^9, 3.8464247782277365`*^9}, {
+  3.846424840641409*^9, 
+  3.8464248413713512`*^9}},ExpressionUUID->"86c8a3aa-4efc-41eb-9cd7-\
+6fc3de1b2a19"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "45", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"graph", "=", 
+  RowBox[{"RandomGraph", "[", 
+   RowBox[{
+    RowBox[{"BernoulliGraphDistribution", "[", 
+     RowBox[{"10", ",", "0.75"}], "]"}], ",", 
+    RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846425165850627*^9, 3.846425197112714*^9}, 
+   3.8464252575584517`*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"031e23b7-9065-4b1f-8954-26863dcf5aaa"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "extendClique", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"extendClique", "[", 
+    RowBox[{"edgeList_", ",", "elem_"}], "]"}], "[", "clique_", "]"}], ":=", 
+  RowBox[{"extendClique", "[", 
+   RowBox[{"edgeList", ",", "clique", ",", "elem"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"extendClique", "[", 
+   RowBox[{"edgeList_", ",", "clique_", ",", "elem_"}], "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"ContainsAll", "[", 
+     RowBox[{"edgeList", ",", 
+      RowBox[{"Thread", "@", 
+       RowBox[{"UndirectedEdge", "[", 
+        RowBox[{"clique", ",", "elem"}], "]"}]}]}], "]"}], ",", 
+    RowBox[{"Append", "[", 
+     RowBox[{"clique", ",", "elem"}], "]"}], ",", "clique"}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846425400629943*^9, 3.846425480877922*^9}, {
+  3.8464255219162617`*^9, 3.8464255255572867`*^9}, {3.846425646016958*^9, 
+  3.846425687438325*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"d8a13d3c-59cc-4d68-b5e5-4f67f1d426a3"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "extendCliqueList", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"extendCliqueList", "[", "edgeList_", "]"}], "[", 
+   RowBox[{"cliques_", ",", "elem_"}], "]"}], ":=", 
+  RowBox[{"Union", "[", 
+   RowBox[{"cliques", ",", 
+    RowBox[{
+     RowBox[{"extendClique", "[", 
+      RowBox[{"edgeList", ",", "elem"}], "]"}], "/@", "cliques"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"{", "elem", "}"}], "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8464257727609196`*^9, 3.8464258031031747`*^9}, {
+  3.846425857659855*^9, 3.8464258774735537`*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"a625b46d-f2b4-4214-bd56-9e244472f000"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "findAllCliques", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"findAllCliques", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:041d\:0430\:0445\:043e\:0434\:0438\:0442 \:0432\:043e\:043e\:0431\
+\:0449\:0435 \:0432\:0441\:0435 \:043a\:043b\:0438\:043a\:0438 \:0432 \:0433\
+\:0440\:0430\:0444\:0435, \:0432\:043a\:043b\:044e\:0447\:0430\:044f \:043a\
+\:043b\:0438\:043a\:0438 \:0438\:0437 \:043e\:0434\:043d\:043e\:0439, \:0434\
+\:0432\:0443\:0445, \:0442\:0440\:0451\:0445 \:0432\:0435\:0440\:0448\:0438\
+\:043d\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"findAllCliques", "[", 
+   RowBox[{"edgeList_", ",", "vertexList_"}], "]"}], ":=", 
+  RowBox[{"Fold", "[", 
+   RowBox[{
+    RowBox[{"extendCliqueList", "[", "edgeList", "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{"First", "@", "vertexList"}], "}"}], "}"}], ",", 
+    RowBox[{"Rest", "@", "vertexList"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846426110419611*^9, 3.846426204608162*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"1cc9d926-1919-4f91-b597-e6c71f361626"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "deleteSubsets", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"deleteSubsets", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:0418\:0437 \:0441\:043f\:0438\:0441\:043a\:0430 \:043c\:043d\:043e\
+\:0436\:0435\:0441\:0442\:0432 \:0443\:0434\:0430\:043b\:044f\:0435\:0442 \
+\:043c\:043d\:043e\:0436\:0435\:0441\:0442\:0432\:0430, \:043a\:043e\:0442\
+\:043e\:0440\:044b\:0435 \:044f\:0432\:043b\:044f\:044e\:0442\:0441\:044f \
+\:043f\:043e\:0434\:043c\:043d\:043e\:0436\:0435\:0441\:0442\:0432\:0430\:043c\
+\:0438 \:0434\:0440\:0443\:0433\:0438\:0445 \:043c\:043d\:043e\:0436\:0435\
+\:0441\:0442\:0432\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"deleteSubsets", "[", 
+   RowBox[{"list", ":", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", "__Integer", "}"}], ".."}], "}"}]}], "]"}], ":=", 
+  RowBox[{"DeleteDuplicates", "[", 
+   RowBox[{
+    RowBox[{"ReverseSortBy", "[", 
+     RowBox[{"list", ",", "Length"}], "]"}], ",", "SubsetQ"}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.84642596737457*^9, 3.846426069255988*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"024846ad-3543-4299-ad00-202174b2aa9c"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "findCliques", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"findCliques", "[", 
+   RowBox[{"graph_Graph", "?", "UndirectedGraphQ"}], "]"}], ":=", 
+  RowBox[{"deleteSubsets", "@", 
+   RowBox[{"findAllCliques", "[", 
+    RowBox[{
+     RowBox[{"EdgeList", "@", "graph"}], ",", 
+     RowBox[{"VertexList", "@", "graph"}]}], "]"}]}]}]}], "Input",
+ CellChangeTimes->{{3.846426213614798*^9, 3.84642626088421*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"5cacb367-652d-44a1-b348-114ba51dee72"],
+
+Cell[BoxData[{
+ RowBox[{"findCliques", "@", "graph"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Subgraph", "[", 
+    RowBox[{"graph", ",", "#"}], "]"}], "&"}], "/@", 
+  "%"}], "\[IndentingNewLine]", 
+ RowBox[{"AllTrue", "[", 
+  RowBox[{"%", ",", "CompleteGraphQ"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.8464262671134853`*^9, 3.846426313088749*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"d03a210a-369f-4070-a19c-ec2856eb96e1"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\:041f\:0440\:043e\:0432\:0435\:0440\:043a\:0430 \:043d\:0430 \:0441\
+\:0432\:044f\:0437\:043d\:043e\:0441\:0442\:044c", "Section",
+ CellChangeTimes->{{3.846426386117259*^9, 
+  3.846426390400779*^9}},ExpressionUUID->"9177f559-148a-4617-852a-\
+5110f5883e2e"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "connectedGraphQ", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"connectedGraphQ", "[", 
+   RowBox[{"graph_Graph", "?", "UndirectedGraphQ"}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"queue", ",", 
+      RowBox[{"adjacencyList", "=", 
+       RowBox[{"AdjacencyList", "@", "graph"}]}], ",", 
+      RowBox[{"connected", "=", 
+       RowBox[{"{", "}"}]}], ",", 
+      RowBox[{"vertexList", "=", 
+       RowBox[{"VertexList", "@", "graph"}]}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"For", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"queue", "=", 
+        RowBox[{"{", 
+         RowBox[{"First", "@", "vertexList"}], "}"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"queue", "!=", 
+        RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"queue", "=", 
+        RowBox[{"Complement", "[", 
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+           "adjacencyList", "\[LeftDoubleBracket]", "queue", 
+            "\[RightDoubleBracket]"}], "]"}], ",", "connected"}], "]"}]}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"connected", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"connected", ",", "queue"}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"connected", "==", "vertexList"}]}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846426425007965*^9, 3.846426449036786*^9}, 
+   3.846426910789212*^9},
+ CellLabel->"In[20]:=",ExpressionUUID->"936dc5ae-96eb-47a7-bcb4-3ae736d8d17f"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "connectedUndirectedGraphQ", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"connectedUndirectedGraphQ", "[", "graph_Graph", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"UndirectedGraphQ", "[", "graph", "]"}], "&&", 
+   RowBox[{"ConnectedGraphQ", "[", "graph", "]"}]}]}]}], "Input",
+ CellChangeTimes->{{3.846428994481019*^9, 3.846429043944735*^9}},
+ CellLabel->"In[22]:=",ExpressionUUID->"1c60b671-7ee4-4263-b222-39af9a1b0a64"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\:041c\:043e\:0441\:0442\:044b", "Section",
+ CellChangeTimes->{{3.846426970439178*^9, 
+  3.8464269725090413`*^9}},ExpressionUUID->"7e28d9ec-9443-4f00-869d-\
+855fbe359bd9"],
+
+Cell["\<\
+\:041c\:043e\:0441\:0442, \:044d\:0442\:043e \:0442\:0430\:043a\:043e\:0435 \
+\:0440\:0435\:0431\:0440\:043e, \:043f\:043e\:0441\:043b\:0435 \:0443\:0434\
+\:0430\:043b\:0435\:043d\:0438\:044f \:043a\:043e\:0442\:043e\:0440\:043e\
+\:0433\:043e \:0433\:0440\:0430\:0444 \:0442\:0435\:0440\:044f\:0435\:0442 \
+\:0441\:0432\:044f\:0437\:043d\:043e\:0441\:0442\:044c\
+\>", "Text",
+ CellChangeTimes->{{3.8464269848326035`*^9, 
+  3.84642700125548*^9}},ExpressionUUID->"ef6b07ae-6207-4108-a27b-\
+e11fefcc4ab0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "45", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"graph", "=", 
+  RowBox[{"RandomGraph", "[", 
+   RowBox[{
+    RowBox[{"BernoulliGraphDistribution", "[", 
+     RowBox[{"10", ",", "0.2"}], "]"}], ",", 
+    RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846425165850627*^9, 3.846425197112714*^9}, 
+   3.8464252575584517`*^9, {3.846427182878261*^9, 3.846427190217797*^9}, 
+   3.846427251880613*^9},
+ CellLabel->"In[24]:=",ExpressionUUID->"5858a102-32af-4a5b-af09-2c5da8d15f3e"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "bridgeQ", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bridgeQ", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:041f\:0440\:043e\:0432\:0435\:0440\:044f\:0435\:0442, \:044f\:0432\
+\:043b\:044f\:0435\:0442\:0441\:044f \:043b\:0438 \:0440\:0435\:0431\:0440\
+\:043e \:043c\:043e\:0441\:0442\:043e\:043c \:0432 \:0441\:0432\:044f\:0437\
+\:043d\:043e\:043c \:0433\:0440\:0430\:0444\:0435\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bridgeQ", "::", "\"\<ConnectedGraphQ\>\""}], "=", 
+   "\"\<Graph must be connected\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bridgeQ", "[", 
+    RowBox[{"graph_Graph", "?", "connectedUndirectedGraphQ"}], "]"}], "[", 
+   "edge_UndirectedEdge", "]"}], ":=", 
+  RowBox[{"!", 
+   RowBox[{"ConnectedGraphQ", "@", 
+    RowBox[{"EdgeDelete", "[", 
+     RowBox[{"graph", ",", "edge"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bridgeQ", "[", 
+    RowBox[{"graph_Graph", "?", "UndirectedGraphQ"}], "]"}], "[", 
+   "edge_UndirectedEdge", "]"}], ":=", 
+  RowBox[{"Message", "[", 
+   RowBox[{"bridgeQ", "::", "\"\<ConnectedGraphQ\>\""}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8464270388527365`*^9, 3.846427154137933*^9}, {
+  3.8464272171090727`*^9, 3.846427218729885*^9}, {3.8464279643086557`*^9, 
+  3.846428025651773*^9}, {3.8464290652175145`*^9, 3.846429068507022*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"404b674b-9d11-43a9-844e-deaf715bdaa2"],
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"EdgeList", "@", "graph"}], ",", 
+   RowBox[{"bridgeQ", "@", "graph"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.846427224495253*^9, 3.8464272409417067`*^9}},
+ CellLabel->"In[31]:=",ExpressionUUID->"911b97c3-789c-4512-b3f3-8bfe6166274a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"bridgeQ", "[", 
+   RowBox[{"EdgeDelete", "[", 
+    RowBox[{"graph", ",", 
+     RowBox[{"3", "\[UndirectedEdge]", "6"}]}], "]"}], "]"}], "[", 
+  RowBox[{"4", "\[UndirectedEdge]", "8"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8464280315284696`*^9, 3.846428055423173*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"1526a2a1-8e13-40a1-b002-386778831c0f"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\:0422\:043e\:0447\:043a\:0438 \:0441\:043e\:0447\:043b\:0435\:043d\
+\:0435\:043d\:0438\:044f", "Section",
+ CellChangeTimes->{{3.8464272817401123`*^9, 
+  3.846427290305871*^9}},ExpressionUUID->"8bc0a4c3-1c5a-4473-a052-\
+b1ec0f01249a"],
+
+Cell["\<\
+\:0422\:043e\:0447\:043a\:0430 \:0441\:043e\:0447\:043b\:0435\:043d\:0435\
+\:043d\:0438\:044f, \:044d\:0442\:043e \:0442\:0430\:043a\:0430\:044f \:0432\
+\:0435\:0440\:0448\:0438\:043d\:0430, \:043f\:043e\:0441\:043b\:0435 \:0443\
+\:0434\:0430\:043b\:0435\:043d\:0438\:044f \:043a\:043e\:0442\:043e\:0440\
+\:043e\:0433\:043e \:0433\:0440\:0430\:0444 \:0442\:0435\:0440\:044f\:0435\
+\:0442 \:0441\:0432\:044f\:0437\:043d\:043e\:0441\:0442\:044c\
+\>", "Text",
+ CellChangeTimes->{{3.8464269848326035`*^9, 3.84642700125548*^9}, {
+  3.846427299266486*^9, 
+  3.8464273075472827`*^9}},ExpressionUUID->"35acac07-1bbe-4df6-abb7-\
+c600d0c1913b"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "articulationPointQ", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"articulationPointQ", "::", "\"\<ConnectedGraphQ\>\""}], "=", 
+   "\"\<Graph must be connected\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"articulationPointQ", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:041f\:0440\:043e\:0432\:0435\:0440\:044f\:0435\:0442, \:044f\:0432\
+\:043b\:044f\:0435\:0442\:0441\:044f \:043b\:0438 \:0432\:0435\:0440\:0448\
+\:0438\:043d\:0430 \:0442\:043e\:0447\:043a\:043e\:0439 \:0441\:043e\:0447\
+\:043b\:0435\:043d\:0435\:043d\:0438\:044f \:0441\:0432\:044f\:0437\:043d\
+\:043e\:0433\:043e \:0433\:0440\:0430\:0444\:0430\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"articulationPointQ", "[", 
+     RowBox[{"graph_Graph", "?", "connectedUndirectedGraphQ"}], "]"}], "[", 
+    "vertex_", "]"}], "/;", 
+   RowBox[{"MemberQ", "[", 
+    RowBox[{
+     RowBox[{"VertexList", "@", "graph"}], ",", "vertex"}], "]"}]}], ":=", 
+  RowBox[{"!", 
+   RowBox[{"ConnectedGraphQ", "@", 
+    RowBox[{"VertexDelete", "[", 
+     RowBox[{"graph", ",", "vertex"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"articulationPointQ", "[", 
+    RowBox[{"graph_Graph", "?", "UndirectedGraphQ"}], "]"}], "[", "_", "]"}], 
+  ":=", 
+  RowBox[{"Message", "[", 
+   RowBox[{"articulationPointQ", "::", "\"\<ConnectedGraphQ\>\""}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8464273118050613`*^9, 3.8464273281963773`*^9}, {
+   3.8464273884256096`*^9, 3.8464274858676863`*^9}, {3.8464275942363763`*^9, 
+   3.8464276276073675`*^9}, {3.8464278359995265`*^9, 3.846427914521784*^9}, 
+   3.8464290510794163`*^9},
+ CellLabel->"In[33]:=",ExpressionUUID->"104f5f3c-219e-4448-b78c-33e392f88781"],
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"VertexList", "@", "graph"}], ",", 
+   RowBox[{"articulationPointQ", "@", "graph"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8464274958160458`*^9, 3.8464275260696564`*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"4c6b9c61-8603-4640-86de-b2cc14a127bf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"articulationPointQ", "[", 
+   RowBox[{"VertexDelete", "[", 
+    RowBox[{"graph", ",", "3"}], "]"}], "]"}], "[", "4", "]"}]], "Input",
+ CellChangeTimes->{{3.8464279267793093`*^9, 3.846427940558915*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"46e226cc-65a7-48df-9d75-f3f2de235137"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\:0420\:0430\:0437\:0440\:0435\:0437\:044b", "Section",
+ CellChangeTimes->{{3.846428079768214*^9, 
+  3.8464280822139015`*^9}},ExpressionUUID->"016dc115-b1e7-4ba3-99e5-\
+95696a81ce17"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "46", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"graph", "=", 
+  RowBox[{"RandomGraph", "[", 
+   RowBox[{
+    RowBox[{"BernoulliGraphDistribution", "[", 
+     RowBox[{"10", ",", "0.4"}], "]"}], ",", 
+    RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8464283006202064`*^9, 3.846428303672674*^9}, {
+  3.8464284020411243`*^9, 3.8464284227453175`*^9}, {3.8464298039566317`*^9, 
+  3.846429817218571*^9}},
+ CellLabel->"In[40]:=",ExpressionUUID->"11dcea44-0db0-4101-84fd-80b9d231a3dd"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "kargerStep", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"kargerStep", "[", "edgeList_", "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"edge", "=", 
+      RowBox[{"RandomChoice", "@", "edgeList"}]}], "}"}], ",", 
+    RowBox[{"kargerStep", "[", 
+     RowBox[{
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{"edgeList", ",", "edge", ",", "1", ",", "1"}], "]"}], ",", 
+      "edge"}], "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"kargerStep", "[", 
+   RowBox[{"edgeList_", ",", "edge_"}], "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"u", "=", 
+       RowBox[{"First", "@", "edge"}]}], ",", 
+      RowBox[{"v", "=", 
+       RowBox[{"Last", "@", "edge"}]}]}], "}"}], ",", 
+    RowBox[{"DeleteCases", "[", 
+     RowBox[{
+      RowBox[{"edgeList", "/.", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"u", "|", "v"}], ")"}], "->", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"{", 
+          RowBox[{"u", ",", "v"}], "}"}], "]"}]}]}], ",", 
+      RowBox[{"x_", "\[UndirectedEdge]", "x_"}]}], "]"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8464303041545706`*^9, 3.846430473932418*^9}, {
+  3.8464308268625827`*^9, 3.8464308299706345`*^9}, {3.846430906767022*^9, 
+  3.8464309197953973`*^9}, {3.8464314180492177`*^9, 3.846431456982733*^9}, {
+  3.846431522294412*^9, 3.8464315454259777`*^9}},
+ CellLabel->"In[43]:=",ExpressionUUID->"b4437093-3ff7-46af-8a58-382d3b70b263"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", "findCut", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"findCut", "::", "\"\<usage\>\""}], "=", 
+   "\"\<\:041f\:0440\:043e\:0432\:0435\:0440\:044f\:0435\:0442, \:044f\:0432\
+\:043b\:044f\:0435\:0442\:0441\:044f \:043b\:0438 \:0440\:0435\:0431\:0440\
+\:043e \:043c\:043e\:0441\:0442\:043e\:043c \:0432 \:0441\:0432\:044f\:0437\
+\:043d\:043e\:043c \:0433\:0440\:0430\:0444\:0435\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"findCut", "::", "\"\<ConnectedGraphQ\>\""}], "=", 
+   "\"\<Graph must be connected\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"findCut", "[", 
+   RowBox[{"graph_Graph", "?", "connectedUndirectedGraphQ"}], "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"multiGraph", "=", 
+      RowBox[{"Nest", "[", 
+       RowBox[{"kargerStep", ",", 
+        RowBox[{"Map", "[", 
+         RowBox[{"List", ",", 
+          RowBox[{"EdgeList", "@", "graph"}], ",", 
+          RowBox[{"{", "2", "}"}]}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"VertexCount", "@", "graph"}], "-", "2"}]}], "]"}]}], "}"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Length", "@", "multiGraph"}], ",", 
+      RowBox[{"List", "@@", 
+       RowBox[{"First", "@", "multiGraph"}]}]}], "}"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"findCut", "[", 
+    RowBox[{"graph_Graph", "?", "UndirectedGraphQ"}], "]"}], "[", 
+   "edge_UndirectedEdge", "]"}], ":=", 
+  RowBox[{"Message", "[", 
+   RowBox[{"findCut", "::", "\"\<ConnectedGraphQ\>\""}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.846431687872728*^9, 3.8464318091273866`*^9}, {
+   3.84643185582269*^9, 3.8464318719234133`*^9}, 3.8464319042133656`*^9},
+ CellLabel->"In[67]:=",ExpressionUUID->"125cc9e5-465c-48c6-a351-583800f7e3df"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "45", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"findCut", "@", "graph"}]}], "Input",
+ CellChangeTimes->{
+  3.846431054800968*^9, {3.8464314703798084`*^9, 3.8464315007895947`*^9}, {
+   3.8464315577066827`*^9, 3.8464315637545595`*^9}, {3.846431635571636*^9, 
+   3.8464316591984563`*^9}, {3.8464318147252827`*^9, 
+   3.8464318163139935`*^9}, {3.846431936159605*^9, 3.846431940807243*^9}},
+ CellLabel->"In[72]:=",ExpressionUUID->"209d7dc1-7e9a-48b7-a5b8-35395a937e0a"]
+}, Closed]]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (July 9, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"cd5a8ae1-c676-428b-8a32-6727f7ccd37b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 177, 3, 101, "Section",ExpressionUUID->"74b43448-6953-4857-b2f1-73312bb4c41a"],
+Cell[760, 27, 357, 6, 53, "Text",ExpressionUUID->"86c8a3aa-4efc-41eb-9cd7-6fc3de1b2a19"],
+Cell[1120, 35, 510, 11, 73, "Input",ExpressionUUID->"031e23b7-9065-4b1f-8954-26863dcf5aaa"],
+Cell[1633, 48, 1042, 25, 103, "Input",ExpressionUUID->"d8a13d3c-59cc-4d68-b5e5-4f67f1d426a3"],
+Cell[2678, 75, 677, 15, 74, "Input",ExpressionUUID->"a625b46d-f2b4-4214-bd56-9e244472f000"],
+Cell[3358, 92, 1110, 22, 103, "Input",ExpressionUUID->"1cc9d926-1919-4f91-b597-e6c71f361626"],
+Cell[4471, 116, 1169, 24, 103, "Input",ExpressionUUID->"024846ad-3543-4299-ad00-202174b2aa9c"],
+Cell[5643, 142, 530, 11, 74, "Input",ExpressionUUID->"5cacb367-652d-44a1-b348-114ba51dee72"],
+Cell[6176, 155, 446, 10, 102, "Input",ExpressionUUID->"d03a210a-369f-4070-a19c-ec2856eb96e1"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[6659, 170, 263, 4, 78, "Section",ExpressionUUID->"9177f559-148a-4617-852a-5110f5883e2e"],
+Cell[6925, 176, 1646, 40, 305, "Input",ExpressionUUID->"936dc5ae-96eb-47a7-bcb4-3ae736d8d17f"],
+Cell[8574, 218, 464, 9, 74, "Input",ExpressionUUID->"1c60b671-7ee4-4263-b222-39af9a1b0a64"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[9075, 232, 177, 3, 78, "Section",ExpressionUUID->"7e28d9ec-9443-4f00-869d-855fbe359bd9"],
+Cell[9255, 237, 512, 9, 53, "Text",ExpressionUUID->"ef6b07ae-6207-4108-a27b-e11fefcc4ab0"],
+Cell[9770, 248, 582, 12, 73, "Input",ExpressionUUID->"5858a102-32af-4a5b-af09-2c5da8d15f3e"],
+Cell[10355, 262, 1511, 33, 161, "Input",ExpressionUUID->"404b674b-9d11-43a9-844e-deaf715bdaa2"],
+Cell[11869, 297, 298, 6, 43, "Input",ExpressionUUID->"911b97c3-789c-4512-b3f3-8bfe6166274a"],
+Cell[12170, 305, 383, 8, 43, "Input",ExpressionUUID->"1526a2a1-8e13-40a1-b002-386778831c0f"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12590, 318, 240, 4, 78, "Section",ExpressionUUID->"8bc0a4c3-1c5a-4473-a052-b1ec0f01249a"],
+Cell[12833, 324, 644, 11, 53, "Text",ExpressionUUID->"35acac07-1bbe-4df6-abb7-c600d0c1913b"],
+Cell[13480, 337, 1796, 40, 161, "Input",ExpressionUUID->"104f5f3c-219e-4448-b78c-33e392f88781"],
+Cell[15279, 379, 313, 6, 43, "Input",ExpressionUUID->"4c6b9c61-8603-4640-86de-b2cc14a127bf"],
+Cell[15595, 387, 315, 6, 43, "Input",ExpressionUUID->"46e226cc-65a7-48df-9d75-f3f2de235137"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[15947, 398, 189, 3, 78, "Section",ExpressionUUID->"016dc115-b1e7-4ba3-99e5-95696a81ce17"],
+Cell[16139, 403, 588, 12, 73, "Input",ExpressionUUID->"11dcea44-0db0-4101-84fd-80b9d231a3dd"],
+Cell[16730, 417, 1532, 39, 103, "Input",ExpressionUUID->"b4437093-3ff7-46af-8a58-382d3b70b263"],
+Cell[18265, 458, 1874, 45, 190, "Input",ExpressionUUID->"125cc9e5-465c-48c6-a351-583800f7e3df"],
+Cell[20142, 505, 524, 9, 73, "Input",ExpressionUUID->"209d7dc1-7e9a-48b7-a5b8-35395a937e0a"]
+}, Closed]]
+}
+]
+*)
+
